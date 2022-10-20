@@ -1,0 +1,592 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.A.R.S</title>
+    <link rel='stylesheet' href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" type="text/css" href="{% static './fps/app/assets/stylesheet/full-page-scroll.css' %}" >
+</head>
+<body onload="change_bg_init()">
+    <!--Navbar-->
+    <div class="feature">
+        <form action="song">  
+        <!--search box-->
+            <div class="searchbar">
+            <div class="search">
+            <input type="text" name="song_play" class="searchTerm" placeholder="What are you looking for?">
+            <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+            </button>
+            </div>
+            </div>
+        <!--End of search box-->
+    <nav>
+        <h1 id="modes"> Mode</h1>
+        <h3> For you</h3>
+        <label class="switch">
+        <input type="radio" id="for_you" checked name="mode" value="1" onclick="change_bg()" class="rad_switch">
+        <span class="slider round"></span>
+        </label>
+        <h3> Peace</h3>
+        <label class="switch">
+        <input type="radio" name="mode" id="peace" value="2" onclick="change_bg()" class="rad_switch">
+        <span class="slider round"></span>
+        </label> 
+        <h3> Work</h3>
+        <label class="switch">
+        <input type="radio" name="mode" value="3" id="work" onclick="change_bg()" class="rad_switch">
+        <span class="slider round"></span>
+        </label> 
+        <h3> Party</h3>
+        <label class="switch">
+        <input type="radio" name="mode" value="4" id="party" onclick="change_bg()" class="rad_switch">
+        <span class="slider round"></span>
+        </label> 
+        <h3> Workout</h3>
+        <label class="switch">
+        <input type="radio" name="mode" value="5" id="workout" onclick="change_bg()" class="rad_switch">
+        <span class="slider round"></span>
+        </label>
+        </nav>
+    </form>
+    </div>
+      <!--End of Navbar-->
+
+
+      <!--Music Player-->
+    <div class ='play'>
+    <div id="app-cover">
+        <div id="bg-artwork"></div>
+        <div id="bg-layer"></div>
+        <div id="player">
+            <div id="player-track">
+                <div id="album-name"></div>
+                <div id="track-name"></div>
+                <div id="track-time">
+                    <div id="current-time"></div>
+                    <div id="track-length"></div>
+                </div>
+                <div id="s-area">
+                    <div id="ins-time"></div>
+                    <div id="s-hover"></div>
+                    <div id="seek-bar"></div>
+                </div>
+            </div>
+            <div id="player-content">
+                <div id="album-art">
+                    <!-- Insert Images Here-->
+                    <img src="{{crr.img}}" class="active" id="_1">
+                    <img src="{{crr.img}}" class="active" id="_2">
+                    <img src="{{crr.img}}" class="active" id="_3">
+                    <img src="{{crr.img}}" class="active" id="_4">
+                    <img src="{{crr.img}}" class="active" id="_5">
+                    <img src="{{crr.img}}" class="active" id="_6">                                            
+                    <div id="buffer-box">Buffering ...</div>
+                </div>
+                <div id="player-controls">
+                    <div class="control">
+                        <div class="button" id="play-previous">
+                            <i class="fas fa-backward"></i>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="button" id="play-pause-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="button" id="play-next">
+                            <i class="fas fa-forward"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!--End of Music Player-->
+    
+    <div id="main" class="scroll-container">
+        <section class="section1">
+
+                
+
+        <!--Artist and Info-->
+
+        <div class="song_">
+            <div id="song_img" style="background: url({{crr.img}}); background-size: cover;"></div>
+            <div id="song_info">
+                <div class="info_">
+                    <h2>Now Playing:</h2>
+                    <p>
+                        Name: {{crr.name}}<br>
+                        Artist: {{crr.artist}}<br>
+                        Year: {{crr.year}}<br>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+      <!--End of Artist and Info-->
+        </section>
+
+        <section class="section2">
+            <!--Second (Recommendation Page)-->
+            <div class="second">
+                <div id="rec_head"><h1>Songs you may like</h1></div>
+                <a href="{% url 'song' %}?song_play={{rc.name.1}}+{{rc.artist.1}}&mode=1">
+                <div class="recommend_div recommend_div1" style="background: url({{rc.img.1}}); background-size: cover;">
+                    <div class="recommend"><div class="song_name">{{rc.name.1}}</div>
+                    </div>
+                    <div class="recommend_text">
+                        <div class='text'><p>
+                        <!--  Tum Hi Ho<br> -->
+                            Artist: {{rc.artist.1}}<br>
+                            Year: {{rc.year.1}}<br>
+                        </p></div>
+                    </div>
+                </div>
+                </a>
+                <a href="{% url 'song' %}?song_play={{rc.name.2}}+{{rc.artist.2}}&mode=1">
+                <div class="recommend_div recommend_div2" style="background: url({{rc.img.2}}); background-size: cover;">
+                    <div class="recommend"><div class="song_name">{{rc.name.2}}</div>
+                    </div>
+                    <div class="recommend_text">
+                        <div class='text'><p>
+                        <!--   Song Name: Samjhawan<br> -->
+                        Artist: {{rc.artist.2}}<br>
+                        Year: {{rc.year.2}}<br>
+                        </p></div>
+                    </div>
+                </div>
+                </a>
+                <a href="{% url 'song' %}?song_play={{rc.name.3}}+{{rc.artist.3}}&mode=1">
+                <div class="recommend_div recommend_div3" style="background: url({{rc.img.3}}); background-size: cover;">
+                    <div class="recommend"><div class="song_name">{{rc.name.3}}</div>
+                    </div>
+                    <div class="recommend_text">
+                        <div class='text'><p>
+                        <!--  Song Name: Shaayad<br> -->
+                        Artist: {{rc.artist.3}}<br>
+                        Year: {{rc.year.3}}<br>
+                        </p></div>
+                    </div>
+                </div>
+                </a>
+                <a href="{% url 'song' %}?song_play={{rc.name.4}}+{{rc.artist.4}}&mode=1" >
+                <div class="recommend_div recommend_div4" style="background: url({{rc.img.4}}); background-size: cover;">
+                    <div class="recommend"><div class="song_name">{{rc.name.4}}</div>
+                    </div>
+                    <div class="recommend_text">
+                        <div class='text'><p>
+                        <!--  Song Name: Shaayad<br> -->
+                        Artist: {{rc.artist.4}}<br>
+                        Year: {{rc.year.4}}<br>
+                        </p></div>
+                    </div>
+                </div>
+                </a>
+                <a href="{% url 'song' %}?song_play={{rc.name.5}}+{{rc.artist.5}}&mode=1">
+                <div class="recommend_div recommend_div5" style="background: url({{rc.img.5}}); background-size: cover;">
+                    <div class="recommend"><div class="song_name">{{rc.name.5}}</div>
+                    </div>
+                    <div class="recommend_text">
+                        <div class='text'><p>
+                        <!--  Song Name: Shaayad<br> -->
+                        Artist: {{rc.artist.5}}<br>
+                        Year: {{rc.year.5}}<br>
+                        </p></div>
+                    </div>
+                </div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+<!-- </div> -->
+<!--End of Second Page-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static './fps/app/assets/javascript/full-page-scroll.js' %}"></script>
+<script type="text/javascript">
+    new fullScroll({
+      mainElement: "main",
+      displayDots: true,
+      dotsPosition: "right",
+      animateTime: 0.7,
+      animateFunction: "ease",
+    });
+  </script>
+<!-- <script src="{% static 'script.js' %}"></script> -->
+<script>/*Music Player*/ 
+    function loaddata(){
+        var data =JSON.parse("{{dt|escapejs}}");
+        var dta=JSON.parse(data);
+        return dta;
+    }
+    function loadmod(){
+        var mod=Number(chx);
+        return mod;
+    }
+    $(function()
+{   
+    var versionUpdate = (new Date()).getTime();
+    dta=loaddata();
+    mod=loadmod();
+    var md=Number('{{mode}}');
+    // console.log('{{csu.0|escapejs}}');
+    var trackUrl=['{{csu.0|escapejs}}','{{csu.1|escapejs}}','{{csu.2|escapejs}}','{{csu.3|escapejs}}','{{csu.4|escapejs}}','{{csu.5|escapejs}}'];
+    var trackNames = ['{{crr.name}}',(dta.name)[md+1],(dta.name)[md+2],(dta.name)[md+3],(dta.name)[md+4],(dta.name)[md+5] ];
+    var albums=['Explicitly for You','Explicitly for You','Explicitly for You','Explicitly for You','Explicitly for You','Explicitly for You'] ;
+    var albumArtworks = ['_1','_2','_3','_4','_5','_6'];
+    for(i=1;i<=5;i++)
+    {
+        document.getElementsByClassName('active')[i].src=(dta.img)[md+i];
+    }
+    var playerTrack = $("#player-track"), bgArtwork = $('#bg-artwork'), bgArtworkUrl, albumName = $('#album-name'), trackName = $('#track-name'), albumArt = $('#album-art'), sArea = $('#s-area'), seekBar = $('#seek-bar'), trackTime = $('#track-time'), insTime = $('#ins-time'), sHover = $('#s-hover'), playPauseButton = $("#play-pause-button"),  i = playPauseButton.find('i'), tProgress = $('#current-time'), tTime = $('#track-length'), seekT, seekLoc, seekBarPos, cM, ctMinutes, ctSeconds, curMinutes, curSeconds, durMinutes, durSeconds, playProgress, bTime, nTime = 0, buffInterval = null, tFlag = false, playPreviousTrackButton = $('#play-previous'), playNextTrackButton = $('#play-next'), currIndex = -1;
+
+    function playPause()
+    {
+        setTimeout(function()
+        {
+            if(audio.paused)
+            {
+                playerTrack.addClass('active');
+                albumArt.addClass('active');
+                checkBuffering();
+                i.attr('class','fas fa-pause');
+                audio.play();
+            }
+            else
+            {
+                playerTrack.removeClass('active');
+                albumArt.removeClass('active');
+                clearInterval(buffInterval);
+                albumArt.removeClass('buffering');
+                i.attr('class','fas fa-play');
+                audio.pause();
+            }
+        },300);
+    }
+
+        
+    function showHover(event)
+    {
+        seekBarPos = sArea.offset(); 
+        seekT = event.clientX - seekBarPos.left;
+        seekLoc = audio.duration * (seekT / sArea.outerWidth());
+        
+        sHover.width(seekT);
+        
+        cM = seekLoc / 60;
+        
+        ctMinutes = Math.floor(cM);
+        ctSeconds = Math.floor(seekLoc - ctMinutes * 60);
+        
+        if( (ctMinutes < 0) || (ctSeconds < 0) )
+            return;
+        
+        if( (ctMinutes < 0) || (ctSeconds < 0) )
+            return;
+        
+        if(ctMinutes < 10)
+            ctMinutes = '0'+ctMinutes;
+        if(ctSeconds < 10)
+            ctSeconds = '0'+ctSeconds;
+        
+        if( isNaN(ctMinutes) || isNaN(ctSeconds) )
+            insTime.text('--:--');
+        else
+            insTime.text(ctMinutes+':'+ctSeconds);
+            
+        insTime.css({'left':seekT,'margin-left':'-21px'}).fadeIn(0);
+        
+    }
+
+    function hideHover()
+    {
+        sHover.width(0);
+        insTime.text('00:00').css({'left':'0px','margin-left':'0px'}).fadeOut(0);		
+    }
+    
+    function playFromClickedPos()
+    {
+        audio.currentTime = seekLoc;
+        seekBar.width(seekT);
+        hideHover();
+    }
+
+    function updateCurrTime()
+    {
+        nTime = new Date();
+        nTime = nTime.getTime();
+
+        if( !tFlag )
+        {
+            tFlag = true;
+            trackTime.addClass('active');
+        }
+
+        curMinutes = Math.floor(audio.currentTime / 60);
+        curSeconds = Math.floor(audio.currentTime - curMinutes * 60);
+        
+        durMinutes = Math.floor(audio.duration / 60);
+        durSeconds = Math.floor(audio.duration - durMinutes * 60);
+        
+        playProgress = (audio.currentTime / audio.duration) * 100;
+        
+        if(curMinutes < 10)
+            curMinutes = '0'+curMinutes;
+        if(curSeconds < 10)
+            curSeconds = '0'+curSeconds;
+        
+        if(durMinutes < 10)
+            durMinutes = '0'+durMinutes;
+        if(durSeconds < 10)
+            durSeconds = '0'+durSeconds;
+        
+        if( isNaN(curMinutes) || isNaN(curSeconds) )
+            tProgress.text('00:00');
+        else
+            tProgress.text(curMinutes+':'+curSeconds);
+        
+        if( isNaN(durMinutes) || isNaN(durSeconds) )
+            tTime.text('00:00');
+        else
+            tTime.text(durMinutes+':'+durSeconds);
+        
+        if( isNaN(curMinutes) || isNaN(curSeconds) || isNaN(durMinutes) || isNaN(durSeconds) )
+            trackTime.removeClass('active');
+        else
+            trackTime.addClass('active');
+
+        
+        seekBar.width(playProgress+'%');
+        
+        if( playProgress == 100 )
+        {
+            i.attr('class','fa fa-play');
+            seekBar.width(0);
+            tProgress.text('00:00');
+            albumArt.removeClass('buffering').removeClass('active');
+            clearInterval(buffInterval);
+        }
+    }
+    
+    function checkBuffering()
+    {
+        clearInterval(buffInterval);
+        buffInterval = setInterval(function()
+        { 
+            if( (nTime == 0) || (bTime - nTime) > 1000  )
+                albumArt.addClass('buffering');
+            else
+                albumArt.removeClass('buffering');
+
+            bTime = new Date();
+            bTime = bTime.getTime();
+
+        },100);
+    }
+
+    function selectTrack(flag)
+    {
+        if( flag == 0 || flag == 1 )
+            ++currIndex;
+        else
+            --currIndex;
+
+        if( (currIndex > -1) && (currIndex < albumArtworks.length) )
+        {
+            if( flag == 0 )
+                i.attr('class','fa fa-play');
+            else
+            {
+                albumArt.removeClass('buffering');
+                i.attr('class','fa fa-pause');
+            }
+
+            seekBar.width(0);
+            trackTime.removeClass('active');
+            tProgress.text('00:00');
+            tTime.text('00:00');
+
+            currAlbum = albums[currIndex];
+            currTrackName = trackNames[currIndex];
+            currArtwork = albumArtworks[currIndex];
+
+            audio.src = trackUrl[currIndex];
+            
+            nTime = 0;
+            bTime = new Date();
+            bTime = bTime.getTime();
+
+            if(flag != 0)
+            {
+                audio.play();
+                playerTrack.addClass('active');
+                albumArt.addClass('active');
+            
+                clearInterval(buffInterval);
+                checkBuffering();
+            }
+
+            albumName.text(currAlbum);
+            trackName.text(currTrackName);
+            albumArt.find('img.active').removeClass('active');
+            $('#'+currArtwork).addClass('active');
+            
+            bgArtworkUrl = $('#'+currArtwork).attr('src');
+
+            bgArtwork.css({'background-image':'url('+bgArtworkUrl+')'});
+        }
+        else
+        {
+            if( flag == 0 || flag == 1 )
+                --currIndex;
+            else
+                ++currIndex;
+        }
+    }
+
+    function initPlayer()
+    {	
+        audio = new Audio();
+        // console.log('{{csu}}');
+        selectTrack(0);
+        
+        audio.loop = false;
+        
+        playPauseButton.on('click',playPause);
+        
+        sArea.mousemove(function(event){ showHover(event); });
+        
+        sArea.mouseout(hideHover);
+        
+        sArea.on('click',playFromClickedPos);
+        
+        $(audio).on('timeupdate',updateCurrTime);
+
+        playPreviousTrackButton.on('click',function(){ selectTrack(-1);} );
+        playNextTrackButton.on('click',function(){ selectTrack(1);});
+    }
+    
+    initPlayer();
+});
+/* End of Music Player */
+
+function change_rec(chx){
+    mod=loadmod();
+    dta=loaddata();
+    var md=(mod-1)*5;
+    // console.log((dta.img)[0]);
+    // console.log('{{fak|escapejs}}');
+    for(i=1;i<=5;i++)
+    {   
+        var my=md+i;
+        // console.log(my);
+        // console.log((dta.name)[my]);
+        document.getElementsByClassName('recommend_div'+i.toString())[0].getElementsByClassName('recommend')[0].getElementsByClassName('song_name')[0].innerHTML=(dta.name)[my];
+        document.getElementsByClassName('recommend_div'+i.toString())[0].getElementsByClassName('recommend_text')[0].getElementsByClassName('text')[0].getElementsByTagName('p')[0].innerHTML='Artist: '+(dta.artist)[my]+'<br>Year: '+(dta.year)[my]+'<br>';                
+        document.getElementsByClassName('recommend_div'+i.toString())[0].style['background']="url("+(dta.img)[my]+")";
+        document.getElementsByClassName('second')[0].getElementsByTagName('a')[i-1].href="{% url 'song' %}?song_play="+(dta.name)[my]+" "+(dta.artist)[my]+"&mode="+chx;
+    }
+}
+
+/* Changing Background Image */
+var chx='1';
+function change_bg_init(){
+    var bd_img=document.querySelector('body');
+    var md='{{mode}}';
+    md=md/5;
+    md+=1;
+    if(md==1){
+        chx='1';
+        bd_img.style.background="url(\"{%static './images/mohamed-nohassi-odxB5oIG_iA-unsplash.jpg'%}\") no-repeat";
+        bd_img.style.backgroundSize="100%";
+        change_rec(chx);
+        document.getElementById("for_you").checked = true;        
+    }
+    else if(md==2){
+        chx='2';        
+        bd_img.style.background="url(\"{%static './images/peace4.jpg'%}\") no-repeat";
+        bd_img.style.backgroundSize="100%";
+        change_rec(chx);
+        document.getElementById("peace").checked = true;
+    }
+    else if(md==3){
+        chx='3';
+        bd_img.style.background="url(\"{%static './images/work3.jpg'%}\") no-repeat";
+        bd_img.style.backgroundSize="100%";
+        change_rec(chx);
+        document.getElementById("work").checked = true;
+    }
+    else if(md==4){
+        chx='4';
+        bd_img.style.background="url(\"{%static './images/party2.jpg'%}\") no-repeat";
+        bd_img.style.backgroundSize="100%";
+        change_rec(chx);
+        document.getElementById("party").checked = true;
+    }
+    else if(md==5){
+        chx='5';
+    
+        bd_img.style.background="url(\"{%static './images/workout.jpg'%}\") no-repeat";
+        bd_img.style.backgroundSize="100%";
+        change_rec(chx);
+        document.getElementById("workout").checked = true;
+    }
+}
+function change_bg(){
+    var bd_img=document.querySelector('body');
+    var sw=document.querySelectorAll('.rad_switch');
+    sw.forEach(x => {if(x.checked){
+        /*console.log(x.value)*/
+        if(x.value=='1'){
+            chx='1';
+            bd_img.style.background="url(\"{%static './images/mohamed-nohassi-odxB5oIG_iA-unsplash.jpg'%}\") no-repeat";
+            bd_img.style.backgroundSize="100%";
+            /* changing recs */
+            // console.log(typeof(data));
+            // console.log(dta);
+            // console.log(typeof(dta)); 
+            // console.log(dta['name']);
+            // console.log((dta.name)[1]);
+            // console.log(typeof(dta.name));
+            // console.log(dta['name']);
+            // var mod='{{mode}}';
+        }
+        else if(x.value=='2'){
+            chx='2';
+            bd_img.style.background="url(\"{%static './images/peace4.jpg'%}\") no-repeat";
+            bd_img.style.backgroundSize="100%";
+            
+        }
+        else if(x.value=='3'){
+            chx='3';
+            bd_img.style.background="url(\"{%static './images/work3.jpg'%}\") no-repeat";
+            bd_img.style.backgroundSize="100%";
+        }
+        else if(x.value=='4'){
+            chx='4';
+            bd_img.style.background="url(\"{%static './images/party2.jpg'%}\") no-repeat";
+            bd_img.style.backgroundSize="100%";
+        }
+        else if(x.value=='5'){
+            chx='5';
+            bd_img.style.background="url(\"{%static './images/workout.jpg'%}\") no-repeat";
+            bd_img.style.backgroundSize="100%";
+        }
+        change_rec(chx);
+            }
+        }
+    );
+}
+
+/* End Changing Background Image */
+   </script>
+</body>
+</html>
